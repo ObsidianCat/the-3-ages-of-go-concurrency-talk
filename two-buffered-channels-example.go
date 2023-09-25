@@ -15,7 +15,7 @@ func createUsersRowsWithChannels(ctx context.Context) map[string]domain.UserRow 
 
 	// Replacement of userRowMtx and concurrentgroup
 	userRowsChan := make(chan domain.UserRow, numOfProfiles)
-	concurrencyLimiter := make(chan struct{}, 100)
+	concurrencyLimiter := make(chan struct{}, 2)
 
 	// 2 Create user rows concurrenty
 	for _, userProfile := range profilesByUserID {
