@@ -5,44 +5,34 @@ import (
 	"time"
 )
 
-func FetchStaffProfiles(ctx context.Context) ([]userProfile, error) {
+func FetchStaffProfiles(ctx context.Context) map[string]UserProfile {
 	// Simulate a 0.5 second wait to fetch data
 	time.Sleep(500 * time.Millisecond)
 
 	// Return a mock result
-	return []userProfile{
-		{ID: "e3f6fbd6-5bac-11ee-8c99-0242ac120002", Name: "John Doe", Email: "john@xample.com"},
-		{ID: "e3f6ff46-5bac-11ee-8c99-0242ac120002", Name: "Jane Smith", Email: "jane@example.com"},
-	}, nil
+	return userProfiles
 }
 
-func FetchStaffProfiles(ctx context.Context) ([]userProfile, error) {
+func FetchUserRolesByID(ctx context.Context, userID string) []string {
 	// Simulate a 0.5 second wait to fetch data
 	time.Sleep(500 * time.Millisecond)
 
 	// Return a mock result
-	return []userProfile{
-		{ID: "e3f6fbd6-5bac-11ee-8c99-0242ac120002", Name: "John Doe", Email: "john@xample.com"},
-		{ID: "e3f6ff46-5bac-11ee-8c99-0242ac120002", Name: "Jane Smith", Email: "jane@example.com"},
-	}, nil
+	return userRoles[userID]
 }
 
-func FetchUserRolesByID(ctx context.Context) ([]userProfile, error) {
+func FetchUserPoliciesByID(ctx context.Context, userID string) []string {
 	// Simulate a 0.5 second wait to fetch data
 	time.Sleep(500 * time.Millisecond)
 
 	// Return a mock result
-	return []userProfile{
-		{ID: "e3f6fbd6-5bac-11ee-8c99-0242ac120002", Name: "John Doe", Email: "john@xample.com"},
-		{ID: "e3f6ff46-5bac-11ee-8c99-0242ac120002", Name: "Jane Smith", Email: "jane@example.com"},
-	}, nil
+	return userPolicies[userID]
 }
 
-// sliceToMapById converts a slice of user profiles to a map of user profiles by ID
-func SliceToMapById(profiles []userProfile) map[string]userProfile {
-	profilesById := make(map[string]userProfile, len(profiles))
-	for _, profile := range profiles {
-		profilesById[profile.ID] = profile
-	}
-	return profilesById
+func FetchUserTeamByID(ctx context.Context, userID string) string {
+	// Simulate a 0.5 second wait to fetch data
+	time.Sleep(500 * time.Millisecond)
+
+	// Return a mock result
+	return userTeam[userID]
 }

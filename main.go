@@ -1,7 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+
+	"github.com/ObsidianCat/the-3-ages-of-go-concurrency-talk/domain"
+)
 
 func main() {
-	fmt.Println("Hello, world!")
+	// pretty print createUsersRowsWithChannels func result map
+	prettyPrint(createUsersRowsWithChannels(context.Background()))
+
+}
+
+func prettyPrint(printable map[string]domain.UserRow) {
+	for k, v := range printable {
+		// pretty print every property with it name
+		fmt.Printf("%v: %v\n", k, v)
+	}
 }

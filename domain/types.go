@@ -1,17 +1,16 @@
 package domain
 
 type UserRow struct {
-	id         string
-	name       string
-	email      string
-	role       string
-	policies   []string
-	team       string
-	collective string
+	ID       string
+	name     string
+	jobTitle string
+	roles    []string
+	policies []string
+	team     string
 }
 
-type userProfile struct {
-	ID    string
-	Name  string
-	Email string
+type UserProfile struct {
+	UserID   string
+	Name     string
+	JobTitle string
 }
