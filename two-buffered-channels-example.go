@@ -7,17 +7,17 @@ import (
 )
 
 func createUsersRowsWithChannels(ctx context.Context) map[string]domain.UserRow {
-	// Fetch data
+	// 1 Fetch data
 	profilesByUserID := domain.FetchStaffProfiles(ctx)
 
-	// 1 Define variables
+	// 2 Define variables
 	numOfProfiles := len(profilesByUserID)
 
 	// Replacement of userRowMtx and concurrentgroup
-	userRowsChan := make(chan domain.UserRow, numOfProfiles)
+	rowsChan := make(chan domain.UserRow, numOfProfiles)
 	concurrencyLimiter := make(chan struct{}, 2)
 
-	// 2 Create user rows concurrenty
+	// 3 Create user rows concurrenty
 	for _, userProfile := range profilesByUserID {
 		// Acquire a "slot" in the semaphore, stop and wait if not available
 		concurrencyLimiter <- struct{}{}
@@ -28,18 +28,21 @@ func createUsersRowsWithChannels(ctx context.Context) map[string]domain.UserRow 
 				<-concurrencyLimiter
 			}()
 
+			// Create user row including the data from the profile
+			// and fetchign more data by calling other services
+			// with user ID from the profile
 			row := domain.NewUserRow(ctx, profile)
 
 			// Send data to the channel
 			userRowsChan <- row
-		}(userProfile, userRowsChan, concurrencyLimiter)
+		}(userProfile, rowsChan, concurrencyLimiter)
 	}
 
-	// 3 Convert channel messages to the map of user rows and return them
+	// 4 Convert channel messages to the map of user rows and return them
 	rows := make(map[string]domain.UserRow, numOfProfiles)
 	for i := 0; i < numOfProfiles; i++ {
-		row := <-userRowsChan
-		rows[row.ID] = row
+		userRow := <-rowsChan
+		rows[userRow.ID] = userRow
 	}
 
 	return rows
