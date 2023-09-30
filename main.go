@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/ObsidianCat/the-3-ages-of-go-concurrency-talk/domain"
+	"github.com/ObsidianCat/the-3-ages-of-go-concurrency-talk/internal"
 )
 
 func main() {
@@ -20,7 +20,7 @@ func main() {
 
 }
 
-func prettyPrint(printable map[string]domain.UserRow) {
+func prettyPrint(printable map[string]internal.UserRow) {
 	for k, v := range printable {
 		// pretty print every user row in the map
 		fmt.Printf("%v: %v\n", k, v)

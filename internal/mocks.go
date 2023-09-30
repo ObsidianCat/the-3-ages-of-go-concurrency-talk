@@ -1,4 +1,4 @@
-package domain
+package internal
 
 var (
 	userProfiles = map[string]UserProfile{
